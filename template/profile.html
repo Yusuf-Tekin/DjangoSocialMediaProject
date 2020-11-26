@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+  {% block title %}
+    Profil
+  {% endblock title %}
+    </title>
+</head>
+
+<body>
+  <section id="page-account-settings">
+    <div class="row">
+      <!-- left menu section -->
+      <div class="col-md-3 mb-2 mb-md-0">
+        <ul class="nav nav-pills flex-column mt-md-0 mt-1">
+          <li class="nav-item">
+            <a class="nav-link d-flex py-75 active" id="account-pill-general" data-toggle="pill"
+              href="#account-vertical-general" aria-expanded="true">
+              <i class="feather icon-globe mr-50 font-medium-3"></i>
+              Genel Bilgiler
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link d-flex py-75" id="account-pill-password" data-toggle="pill"
+              href="#account-vertical-password" aria-expanded="false">
+              <i class="feather icon-lock mr-50 font-medium-3"></i>
+              Şifre'yi Değiştir
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link d-flex py-75" href="{% url 'favorites' %}">
+              <i class="far fa-heart mr-50 font-medium-3"></i>
+              Favorilerin
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link d-flex py-75" href="{% url 'saves' %}">
+              <i class="far fa-bookmark mr-50 font-medium-3"></i>
+              Kaydedilenler
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- right content section -->
+      <div class="col-md-9">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="account-vertical-general"
+                  aria-labelledby="account-pill-general" aria-expanded="true">
+                  <div class="media">
+                    <a href="javascript: void(0);">
+                      <img src="{% static 'app-assets/images/portrait/small/avatar-s-12.jpg' %}" class="rounded mr-75"
+                        alt="profile image" width="64" height="64">
+                    </a>
+                    <div class="media-body mt-75">
+                      <div class="col-12 px-0 d-flex flex-sm-row flex-column justify-content-start">
+                        <label
+                          class="btn btn-sm btn-primary ml-50 mb-50 mb-sm-0 cursor-pointer waves-effect waves-light"
+                          for="account-upload">Yeni Resim Yükle</label>
+                        <input type="file" id="account-upload" hidden="">
+                      </div>
+                      <p class="text-muted ml-75 mt-50"><small>JPG,PNG Formatı
+                        Maks. 800kb
+                        </small></p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row ">
+                    <form class="w-100">
+                      {% csrf_token %}
+                      <div class="col-12">
+                        <div class="form-group">
+                          <div class="controls">
+                            <label for="account-username">Kullanıcı Adı</label>
+                            <input type="text" class="form-control" id="account-username" placeholder="Username"
+                              value="{{request.user.username}}" required=""
+                              data-validation-required-message="This username field is required">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="form-group">
+                          <div class="controls">
+                            <label for="account-name">Adın Soyadın</label>
+                            <input type="text" class="form-control" readonly id="account-name" placeholder="Name"
+                              value="{{request.user.first_name}} {{request.user.last_name}}" required=""
+                              data-validation-required-message="This name field is required">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="form-group">
+                          <div class="controls">
+                            <label for="account-e-mail">E-Posta</label>
+                            <input type="email" class="form-control" readonly id="account-e-mail" placeholder="Email"
+                              value="{{request.user.email}}" required=""
+                              data-validation-required-message="This email field is required">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="form-group">
+                          <div class="controls">
+                            <label for="account-username">Üyelik Tarihi</label>
+                            <input type="text" class="form-control" id="account-username" readonly placeholder=""
+                              value="{{request.user.date_joined}}" required=""
+                              data-validation-required-message="This username field is required">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12 d-flex flex-sm-row flex-column justify-content-end">
+                        <a onclick="profileupdate();"
+                          class="btn btn-primary text-light mr-sm-1 mb-1 mb-sm-0 waves-effect waves-light">
+                          Güncelle</a>
+                        <button type="reset" class="btn btn-outline-warning waves-effect waves-light">Sıfırla</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="account-vertical-password" role="tabpanel"
+                  aria-labelledby="account-pill-password" aria-expanded="false">
+                  <form method="POST" action="#">
+                    {% csrf_token %}
+                    <button type="submit" class="btn text-white btn-primary mx-auto">Şifre Sıfırlama Bağlantısı Gönder</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+  </section>
+  <script>
+    /*function resetpassword(){
+      $.ajax({
+        type : 'POST',
+        url : '/resetpassword/',
+        data:{
+          csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        },success:function(){
+          swal({
+            title: "Başarılı.",
+            text: "E-Posta adresine bir link gönderdik!",
+            icon: "success",
+            button: "Kapat"
+          })
+        },
+        error: function(){
+          swal({
+            title: "Hata",
+            text: "Üzülme, Hata Bizden Kaynaklı!",
+            icon: "error",
+            button: "Kapat"
+          })
+        },
+        
+      })
+    }
+    function profileupdate() {
+
+      $.ajax({
+        type: 'POST',
+        url: '/profileupdate/',
+        data: {
+          newusername: $('#account-username').val(),
+          csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function () {
+          swal({
+            title: "Harika İş.",
+            text: "Profil Güncellendi!",
+            icon: "success",
+            button: "Tamam"
+          })
+        }, error: function () {
+          swal({
+            title: "Özür Dileriz",
+            text: "İşlem Şuan Gerçekleştirilemiyor!",
+            icon: 'error',
+            button: 'Tamam'
+          })
+        }
+      })
+    }
+*/
+  </script>
+</body>
+
+</html>
+{% endblock content %}

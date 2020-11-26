@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}
+
+        Kaydedilenler
+
+        {% endblock title %}</title>
+</head>
+
+<body>
+
+
+    {% block content %}
+    <div class="container">
+        <div class="row">
+
+            {% if veri %}
+            {% for veri in data %}
+            <div class="col-12 col-sm-12 col-lg-6 col-xl-6" id="removepost{{veri.id}}">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="position-relative">
+                            <span class="avatar mr-1 avatar-xl">
+                                <img src="{% static 'app-assets/images/portrait/small/avatar-s-20.jpg' %}">
+                            </span>
+                            <span class="text text-bold-500">
+                                <strong class="font-medium-1">{{veri.OwnerName}} {{veri.OwnerSurname}}</strong><br><i
+                                    class="font-small-2">@{{veri.OwnerUsername}}</i>&nbsp;•&nbsp;<i
+                                    class="font-small-2">{{veri.Category}}</i>&nbsp;•&nbsp;<i
+                                    class="font-small-2">{{veri.Time}}</i>
+                            </span>
+                        </span>
+                        <span class="ml-auto position-sticky">
+                            <span class="dropdown font-size-xsmall" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="true">
+                                <i class="fas fa-ellipsis-h font-medium-5"></i>
+                            </span>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Kullanıcıyı Bildir</a>
+                                <a class="dropdown-item" href="#">Kullanıcıyı Engelle</a>
+                                <a class="dropdown-item" href="#">Hatalı Kategori Bildir</a>
+                                <a class="dropdown-item" href="{% url 'userprofile' veri.OwnerId %}">Profile Git</a>
+
+                                {% if veri.OwnerUsername == request.user.username %}
+                                <button onclick="DeletePost({{veri.id}});" class="dropdown-item">Gönderiyi
+                                    Sil</button>
+
+                                {% endif %}
+
+
+                            </div>
+                        </span>
+                    </div>
+                    <hr>
+                    <div id="content" class="card-body pl-2">
+                        {{veri.Content}}<br>
+                    </div>
+                    <form>
+                        {% csrf_token %}
+
+                        <div class="card-footer">
+                            <span>
+                                <a onclick="SaveClick({{veri.id}})" title="Kaydedildi" id="postsave{{veri.id}}">
+                                    <i class="fas fa-bookmark font-medium-4"></i>
+                                </a>
+                            </span>
+
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <span class="alert alert-danger mx-auto">Henüz gönderi kaydetmedin.</span>
+
+            {% endif %}
+
+        </div>
+    </div>
+
+    <script>
+        function SaveClick(id) {
+            $.ajax({
+                type: 'POST',
+                url: '/savedelete/' + id + '/',
+                data: {
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+
+                }, success: function () {
+                    toastr.warning('Gönderi Kaydedilenlerden Çıkarıldı.')
+                    $('#removepost' + id).remove()
+                }, error: function () {
+                    toastr.error('Bizden kaynaklanan bir sebepten dolayı işlem gerçekleştirilemedi.')
+                }
+            })
+        }
+    </script>
+    {% endblock content %}
+
+</body>
+
+</html>

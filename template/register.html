@@ -1,0 +1,189 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description"
+        content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords"
+        content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="PIXINVENT">
+    <title>{% block title %}
+        Kayıt Ol
+        {% endblock title %}</title>
+    <link rel="apple-touch-icon" href="{% static 'app-assets/images/ico/apple-icon-120.png' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'app-assets/images/ico/favicon.ico' %}">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/vendors/css/vendors.min.css' %}">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/bootstrap-extended.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/colors.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/components.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/themes/dark-layout.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/themes/semi-dark-layout.min.css' %}">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css"
+        href="{% static 'app-assets/css/core/menu/menu-types/vertical-menu.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/core/colors/palette-gradient.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/pages/authentication.css' %}">
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
+    <!-- END: Custom CSS-->
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body id="body"
+    class="vertical-layout vertical-menu-modern dark-layout 1-column  navbar-floating footer-static bg-full-screen-image  blank-page blank-page"
+    data-open="click" data-menu="vertical-menu-modern" data-col="1-column" data-layout="dark-layout">
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <section class="row flexbox-container">
+                    <div class="col-xl-8 col-10 d-flex justify-content-center">
+                        <div class="card bg-authentication rounded-0 mb-0">
+                            <div class="row m-0">
+                                <div class="col-lg-6 d-lg-block d-none text-center align-self-center pl-0 pr-3 py-0">
+                                    <img src="{% static 'app-assets/images/pages/register.jpg' %}" alt="branding logo">
+                                </div>
+                                <div class="col-lg-6 col-12 p-0">
+                                    <div class="card rounded-0 mb-0 p-2">
+                                        <div class="card-header pt-50 pb-1">
+                                            <div class="card-title">
+                                                <h4 class="mb-0">Hesap Oluştur</h4>
+                                            </div>
+                                        </div>
+                                        <p class="px-2">Oluştur ve paylaşmaya başla!</p>
+                                        <div class="card-content">
+                                            <div class="card-body pt-0">
+                                                <form id="RForm">
+                                                    {% csrf_token %}
+                                                    <div class="form-label-group">
+                                                        <input type="text" id="inputName" class="form-control"
+                                                            placeholder="Adın" required>
+                                                        <label for="inputName">Adın</label>
+                                                    </div>
+                                                    <div class="form-label-group">
+                                                        <input type="text" id="inputSurname" class="form-control"
+                                                            placeholder="Soyadın" required>
+                                                        <label for="inputSurname">Soyadın</label>
+                                                    </div>
+                                                    <div class="form-label-group">
+                                                        <input type="text" id="inputUsername" class="form-control"
+                                                            placeholder="Kullanıcı Adı" required>
+                                                        <label for="inputUsername">Kullanıcı Adı</label>
+                                                    </div>
+                                                    <div class="form-label-group">
+                                                        <input type="email" id="inputEmail" class="form-control"
+                                                            placeholder="Eposta" required>
+                                                        <label for="inputEmail">Eposta</label>
+                                                    </div>
+                                                    <div class="form-label-group">
+                                                        <input type="password" id="inputPassword" class="form-control"
+                                                            placeholder="Şifre" required>
+                                                        <label for="inputPassword">Şifre</label>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <div class="col-12">
+                                                            <fieldset class="checkbox">
+                                                                <div class="vs-checkbox-con vs-checkbox-primary">
+                                                                    <input type="checkbox" checked>
+                                                                    <span class="vs-checkbox">
+                                                                        <span class="vs-checkbox--check">
+                                                                            <i class="vs-icon feather icon-check"></i>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span class=""> Şartlar Ve Koşullar!</span>
+                                                                </div>
+                                                            </fieldset>
+                                                        </div>
+                                                    </div>
+                                                    <a href="{% url 'login' %}"
+                                                        class="btn btn-outline-primary float-left btn-inline mb-50">Zaten
+                                                        Hesabım Var!</a>
+                                                    <button type="submit"
+                                                        class="btn btn-outline-success mr-1 mb-1 waves-effect waves-light"
+                                                        id="type-success">Kayıt Ol</a>
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script>
+        $('#RForm').submit(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: 'POST',
+                url: '/register/',
+                data: {
+                    name: $('#inputName').val(),
+                    surname: $('#inputSurname').val(),
+                    username: $('#inputUsername').val(),
+                    email: $('#inputEmail').val(),
+                    password: $('#inputPassword').val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                },
+                success: function () {
+                    document.getElementById('RForm').reset()
+                    swal({
+                        title: "Harika İş!",
+                        text: "Kayıt Tamamlandı!",
+                        icon: "success",
+                        button: 'Kapat'
+                    })
+                },
+                error: function(){
+                    swal({
+                        title: "Şuan Kayıt Yapılamıyor.",
+                        text : "Merak etmeyin.Sorun bizden kaynaklı!",
+                        icon : "error",
+                        button: "Kapat"
+                    })
+                }
+            })
+
+        })
+    </script>
+    <script src="{% static 'app-assets/vendors/js/vendors.min.js' %}"></script>
+    <script src="{% static 'app-assets/js/core/app-menu.min.js' %}"></script>
+    <script src="{% static 'app-assets/js/core/app.min.js' %}"></script>
+    <script src="{% static 'app-assets/js/scripts/components.min.js' %}"></script>
+</body>
+<!-- END: Body-->
+
+</html>

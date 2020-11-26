@@ -1,0 +1,375 @@
+{% load static %}
+
+<html class="loaded" data-textdirection="ltr" style="--vh:6.54px;" lang="en">
+<!-- BEGIN: Head-->
+<link rel="apple-touch-icon" href="{% static 'app-assets/images/ico/apple-icon-120.png' %}">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'app-assets/vendors/css/vendors.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'app-assets/vendors/css/charts/apexcharts.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'app-assets/vendors/css/extensions/tether-theme-arrows.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'app-assets/vendors/css/extensions/tether.min.css' %}">
+<link rel="stylesheet" type="text/css"
+    href="{% static 'app-assets/vendors/css/extensions/shepherd-theme-default.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/core/colors/palette-gradient.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/core/menu/menu-types/vertical-menu.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/bootstrap.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/bootstrap-extended.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/colors.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/components.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/themes/dark-layout.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'app-assets/vendors/css/extensions/sweetalert2.min.css' %}">
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description"
+        content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords"
+        content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="PIXINVENT">
+    <title>{% block title %}
+
+        {% endblock title %}</title>
+    <link rel="apple-touch-icon" href="{% static 'app-assets/images/ico/apple-icon-120.png' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'app-assets/images/ico/favicon.ico' %}">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/vendors/css/vendors.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/vendors/css/charts/apexcharts.css' %}">
+    <link rel="stylesheet" type="text/css"
+        href="{% static 'app-assets/vendors/css/extensions/tether-theme-arrows.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/vendors/css/extensions/tether.min.css' %}">
+    <link rel="stylesheet" type="text/css"
+        href="{% static 'app-assets/vendors/css/extensions/shepherd-theme-default.css' %}">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/bootstrap-extended.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/colors.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/components.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/themes/dark-layout.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/themes/semi-dark-layout.min.css' %}">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css"
+        href="{% static 'app-assets/css/core/menu/menu-types/vertical-menu.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/core/colors/palette-gradient.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/pages/dashboard-analytics.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/pages/card-analytics.min.css' %}">
+    <!-- END: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/toastr.css' %}">
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout 2-columns pace-done navbar-floating footer-static menu-hide vertical-overlay-menu"
+    data-open="click" data-menu="vertical-menu-modern" data-col="2-columns" data-layout="dark-layout"
+    data-shepherd-step="step-1">
+    <div class="pace  pace-inactive">
+        <div class="pace-progress" style="transform: translate3d(100%, 0px, 0px);" data-progress-text="100%"
+            data-progress="99">
+            <div class="pace-progress-inner"></div>
+        </div>
+        <div class="pace-activity"></div>
+    </div>
+
+    <!-- BEGIN: Header-->
+    <nav
+        class="header-navbar navbar-expand-lg navbar navbar-with-menu navbar-shadow navbar-light bg-success navbar-dark floating-nav">
+        <div class="navbar-wrapper">
+            <div class="navbar-container content">
+                <div class="navbar-collapse" id="navbar-mobile">
+                    <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item mobile-menu d-xl-none mr-auto"><a
+                                    class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i
+                                        class="ficon feather icon-menu"></i></a></li>
+                        </ul>
+
+                        <ul class="nav navbar-nav">
+                            <ul class="nav navbar-nav bookmark-icons">
+                                <li class="nav-item d-none d-lg-block"><a class="nav-link" href="app-chat.html"
+                                        data-toggle="tooltip" data-placement="top" title=""
+                                        data-original-title="Mesajlar"><i
+                                            class="ficon feather icon-message-square"></i></a>
+                                </li>
+                                <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{% url 'favorites' %}"
+                                        data-toggle="tooltip" data-placement="top" title=""
+                                        data-original-title="Favorilerim">
+                                        <i data-original-title="Favori" class="ficon feather icon-star warning"></i></a>
+                                </li>
+
+                                <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{% url 'saves' %}"
+                                        data-toggle="tooltip" data-placement="top" title=""
+                                        data-original-title="Kaydedilenler">
+                                        <i class="far fa-bookmark font-medium-3" data-original-title="Favori"></i>
+                                    </a>
+                                </li>
+
+
+                            </ul>
+                            <div class="bookmark-input search-input">
+                                <div class="bookmark-input-icon"><i class="feather icon-search primary"></i></div>
+                                <input class="form-control input" type="text" placeholder="Explore Vuexy..."
+                                    tabindex="0" data-search="template-list">
+                                <ul class="search-list search-list-bookmark ps">
+                                    <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+                                        <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                                    </div>
+                                    <div class="ps__rail-y" style="top: 0px; right: 0px;">
+                                        <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div>
+                                    </div>
+                                </ul>
+                            </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <ul class="nav navbar-nav float-right">
+
+                        <!--  <li class="nav-item nav-search"><a class="nav-link nav-link-search"><i
+                                    class="ficon feather icon-search"></i></a>
+                            <div class="search-input">
+                                <div class="search-input-icon"><i class="feather icon-search primary"></i></div>
+                                <input class="input" type="text" placeholder="Explore Vuexy..." tabindex="-1"
+                                    data-search="template-list">
+                                <div class="search-input-close"><i class="feather icon-x"></i></div>
+                                <ul class="search-list search-list-main ps">
+                                    <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+                                        <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                                    </div>
+                                    <div class="ps__rail-y" style="top: 0px; right: 0px;">
+                                        <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div>
+                                    </div>
+                                </ul>
+                            </div>
+                        </li>
+                        -->
+
+                        {% if data %}
+                        <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="#"
+                                data-toggle="dropdown"><i class="ficon feather icon-bell"></i><span
+                                    class="badge badge-pill badge-primary badge-up"></span></a>
+                            <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
+                                <li class="dropdown-menu-header">
+                                    <div class="dropdown-header m-0 p-2">
+                                        <h3 class="white">Güncel</h3><span class="notification-title">Bildirimler</span>
+                                    </div>
+                                </li>
+                                <li class="scrollable-container media-list ps">
+                                    {% for data in Notification %}
+
+                                    {% if data.NotificationType == 'like' %}
+
+                                    <a class="d-flex justify-content-between"  onclick="ReadFullNotification({{data.id}});">
+                                        <div class="media d-flex align-items-start">
+                                            <div class="media-left text-danger"><i
+                                                    class="fas fa-heart font-medium-5"></i></div>
+                                            <div class="media-body">
+                                                <h6 class="danger media-heading">{{data.NotificationSentBy}} gönderini
+                                                    beğendi.</h6><small class="notification-text"></small>
+
+                                            </div><small>
+                                                <time class="media-meta"
+                                                    datetime="2015-06-11T18:29:20+08:00">{{data.NotificationTime}}</time>
+                                                <br>
+                                                {% if data.NotificationStatus == 0 %}
+                                                <h6 class="text-danger mt-4">Yeni</h6>
+                                                {% else %}
+                                                <small class="text-primary mt-4">Okundu</small>
+                                                {% endif %}
+                                            </small>
+                                             
+                                        </div>
+                                    </a>
+                                    {% elif data.NotificationType == 'save' %}
+                                    <a class="d-flex justify-content-between" onclick="ReadFullNotification({{data.id}});">
+                                        <div class="media d-flex align-items-start">
+                                            <div class="media-left text-dark"><i
+                                                    class="fas fa-bookmark font-medium-5 dark"></i></div>
+                                            <div class="media-body">
+                                                <h6 class="dark media-heading">{{data.NotificationSentBy}} gönderini
+                                                    kaydetti.</h6><small class="notification-text">Şimdi
+                                                    Görüntüle</small>
+                                            </div><small>
+                                                <time class="media-meta"
+                                                    datetime="2015-06-11T18:29:20+08:00">{{data.NotificationTime}}</time>
+                                                    <br>
+                                                    {% if data.NotificationStatus == 0 %}
+                                                    <h6 class="text-danger">Yeni</h6>
+                                                    {% else %}
+                                                    <small class="text-primary mt-4">Okundu</small>
+                                                    {% endif %}</small>
+                                        </div>
+                                    </a>
+                                    {% endif %}
+                                    {% endfor %}
+                                <li class="dropdown-menu-footer"><a class="dropdown-item p-1 text-center"
+                                       >Tüm Bildirimleri Okunmuş Say</a></li>
+
+                            </ul>
+                        </li>
+                        {% endif %}
+
+                        <li class="dropdown dropdown-user nav-item"><a
+                                class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
+                                <div class="user-nav d-sm-flex d-none"><span
+                                        class="user-name text-bold-600">{{request.user.first_name}}
+                                        {{request.user.last_name}}</span><span
+                                        class="user-status">{{request.user.username}}</span></div><span><img
+                                        class="round"
+                                        src="{% static 'app-assets/images/portrait/small/avatar-s-11.jpg' %}"
+                                        alt="avatar" width="40" height="40"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item"
+                                    href="{% url 'profile' %}"><i class="feather icon-user"></i> Profilim</a><a
+                                    class="dropdown-item" href="{% url 'logout' %}"><i class="feather icon-power"></i>
+                                    Çıkış</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <ul class="main-search-list-defaultlist-other-list d-none">
+        <li class="auto-suggestion d-flex align-items-center justify-content-between cursor-pointer"><a
+                class="d-flex align-items-center justify-content-between w-100 py-50">
+                <div class="d-flex justify-content-start"><span class="mr-75 feather icon-alert-circle"></span><span>No
+                        results found.</span></div>
+            </a></li>
+    </ul>
+    <!-- END: Header-->
+
+
+    <!-- BEGIN: Main Menu-->
+    <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow expanded" data-scroll-to-active="true"
+        style="touch-action: none; user-select: none;">
+        <div class="navbar-header expanded">
+            <ul class="nav navbar-nav flex-row">
+                <li class="nav-item mr-auto"><a class="navbar-brand">
+                        <div class="brand-logo" style="background-position: -65px -54px;"></div>
+                        <h2 class="brand-text mb-0" style="color: rgb(115, 103, 240);">Sosyal Medya</h2>
+                    </a></li>
+            </ul>
+        </div>
+        <div class="shadow-bottom"></div>
+        <div class="main-menu-content ps ps--active-y" style="height: 591px;">
+            <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+                <li class="nav-item"><a href="{% url 'home' %}"><i class="feather icon-home"></i><span
+                            class="">Anasayfa</span><span
+                            class="badge badge badge-warning badge-pill float-right mr-2">2</span></a>
+                </li>
+                <hr class="dark">
+                <li class="navigation-header"><span>Kategoriler</span></a>
+                </li>
+                <li class=" nav-item"><a href="{% url 'category' 'genc' %}"><i class="fas fa-child"></i><span
+                            class="menu-title" data-i18n="Email">Genç</span></a>
+                </li>
+                <li class=" nav-item"><a href="{% url 'category' 'tekno' %}"><i class="fas fa-atom"></i><span
+                            class="menu-title" data-i18n="Email">Teknoloji</span></a>
+                </li>
+                <li class=" nav-item"><a href="{% url 'category' 'spor' %}"><i class="far fa-futbol"></i><span
+                            class="menu-title" data-i18n="Email">Spor</span></a>
+                </li>
+                <li class=" nav-item"><a href="{% url 'category' 'haber' %}"><i class="fas fa-newspaper"></i><span
+                            class="menu-title" data-i18n="Email">Haber</span></a>
+                </li>
+                <li class=" nav-item"><a href="{% url 'category' 'magazin' %}"><i class="far fa-gem"></i><span
+                            class="menu-title" data-i18n="Email">Magazin</span></a>
+                </li>
+                <li class=" nav-item"><a href="{% url 'category' 'muzik' %}"><i class="fas fa-music"></i><span
+                            class="menu-title" data-i18n="Email">Müzik</span></a>
+                </li>
+                <li class=" nav-item"><a href="{% url 'category' 'egitim' %}"><i class="fas fa-university"></i><span
+                            class="menu-title" data-i18n="Email">Eğitim</span></a>
+                </li>
+                <li class=" nav-item"><a href="{% url 'category' 'astro' %}"><i class="fas fa-globe-europe"></i><span
+                            class="menu-title" data-i18n="Email">Astro</span></a>
+                </li>
+        </div>
+    </div>
+    <!-- END: Main Menu-->
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                {% block content %}
+
+                {% endblock content %}
+
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+
+
+    <footer class="footer footer-light footer-static">
+        <p class="clearfix blue-grey lighten-2 mb-0"><span
+                class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT © 2019<a
+                    class="text-bold-800 grey darken-2" href="#" target="_blank">Sosyal Medya,</a>Hakkımız Yok
+                ;)</span><span class="float-md-right d-none d-md-block"><i class="feather icon-heart pink"></i></span>
+            <button class="btn btn-primary btn-icon scroll-top waves-effect waves-light" type="button"
+                style="display: none;"><i class="feather icon-arrow-up"></i></button>
+        </p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="{% static 'app-assets/vendors/js/vendors.min.js' %}"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="{% static 'app-assets/vendors/js/charts/apexcharts.min.js' %}"></script>
+    <script src="{% static 'app-assets/vendors/js/extensions/tether.min.js' %}"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="{% static 'app-assets/js/core/app-menu.min.js' %}"></script>
+    <script src="{% static 'app-assets/js/core/app.min.js' %}"></script>
+    <script src="{% static 'app-assets/js/scripts/components.min.js' %}"></script>
+    <script src="{% static 'app-assets/js/scripts/customizer.min.js' %}"></script>
+    <script src="{% static 'app-assets/js/scripts/footer.min.js' %}"></script>
+    <!-- END: Theme JS-->
+    <script src="https://kit.fontawesome.com/90f83f2a71.js" crossorigin="anonymous"></script>
+    <!-- BEGIN: Page JS-->
+    <script src="{% static 'app-assets/js/scripts/pages/dashboard-analytics.min.js' %}"></script>
+    <script src="{% static 'app-assets/js/scripts/extensions/sweet-alerts.min.js' %}" aria-hidden="true"></script>
+    <script src="{% static 'app-assets/vendors/js/extensions/sweetalert2.all.min.js' %}" aria-hidden="true"></script>
+    <script src="{% static 'app-assets/vendors/js/extensions/polyfill.min.js' %}" aria-hidden="true"></script>
+    <script src="{% static 'js/toastr.js' %}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        function ReadFullNotification(id){
+            $.ajax({
+                type: 'POST',
+                url :'/readnotification/'+id+'/',
+                data: {
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                }
+            })
+        }
+    </script>
+
+</body><!-- END: Body-->
+
+</html>

@@ -1,0 +1,370 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}
+    Kategori - Sosyal Medya
+    {% endblock title %}</title>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="row">
+
+     
+    {% if data %}
+    <div class="col-12 col-sm-12 col-md-8 col-xl-8">
+      <div class="container">
+        <div class="row">
+
+
+
+
+          {% for veri in data %}
+          <div class="col-12 col-sm-12 col-lg-12 col-xl-12" id="removepostid{{veri.id}}">
+            <div class="card">
+              <div class="card-header">
+                <span class="position-relative">
+                  <span class="avatar mr-1 avatar-xl">
+                    <img src="{% static 'app-assets/images/portrait/small/avatar-s-20.jpg' %}">
+                  </span>
+                  <span class="text text-bold-500">
+                    <strong class="font-medium-1">{{veri.OwnerName}} {{veri.OwnerSurname}}</strong><br><i
+                      class="font-small-2">@{{veri.OwnerUsername}}</i>&nbsp;•&nbsp;<i
+                      class="font-small-2">{{veri.Category}}</i>&nbsp;•&nbsp;<i class="font-small-2">{{veri.Time}}</i>
+                  </span>
+                </span>
+                <span class="ml-auto position-sticky">
+                  <span class="dropdown font-size-xsmall" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="true">
+                    <i class="fas fa-ellipsis-h font-medium-5"></i>
+                  </span>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Kullanıcıyı Bildir</a>
+                    <a class="dropdown-item" href="#">Kullanıcıyı Engelle</a>
+                    <a class="dropdown-item" href="#">Hatalı Kategori Bildir</a>
+                    <a class="dropdown-item" href="{% url 'userprofile' veri.OwnerId %}">Profile Git</a>
+
+                    {% if veri.OwnerUsername == request.user.username %}
+                    <button onclick="DeletePost({{veri.id}});" class="dropdown-item">Gönderiyi
+                      Sil</button>
+
+                    {% endif %}
+
+
+                  </div>
+                </span>
+              </div>
+              <hr>
+              <div id="content" class="card-body pl-2">
+                {{veri.Content}}<br>
+              </div>
+              <form>
+                {% csrf_token %}
+
+                <div class="card-footer">
+
+                  {% if veri.IsComment == 0 %}
+                  <span>
+                    <a data-toggle="collapse" href="#Post{{veri.id}}" role="button" aria-expanded="true"
+                      aria-controls="Post{{veri.id}}"><i class="fas fa-comment mr-auto ml-auto font-medium-4"
+                        title="Yorumlar"></i></a>
+                  </span>
+
+                  {% endif %}
+
+
+                  
+                  {% if  veri.id in clientlikedata %}
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <span>
+                    <a onclick="like({{veri.id}})" name="liked" title="Beğendin" id="likebutton{{veri.id}}"><i
+                        class="fas fa-heart font-medium-4 text-danger"></i></a>
+                  </span>
+                  {% else %}
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <span>
+                    <a onclick="like({{veri.id}})" name="like" title="Beğen" id="likebutton{{veri.id}}"><i
+                        class="far fa-heart font-medium-4 text-danger"></i></a>
+                  </span>
+                  {% endif %}
+
+
+
+                  {% if veri.id in clientsavedata %}
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <span>
+                    <a onclick="save({{veri.id}})" name="saved" title="Kaydedildi" id="postsave{{veri.id}}">
+                      <i class="fas fa-bookmark font-medium-4"></i>
+                    </a>
+                  </span>
+                  {% else %}
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <span>
+                    <a onclick="save({{veri.id}})" name="save" title="Kaydet" id="postsave{{veri.id}}">
+                      <i class="far fa-bookmark font-medium-4"></i>
+                    </a>
+                  </span>
+                  {% endif %}
+
+
+
+
+                  <div class="collapse" id="Post{{veri.id}}">
+                    <div class="card ">
+                      <div class="card-body">
+                        <form id="commentform">
+                          {% csrf_token %}
+                          <fieldset class="form-label-group mb-0 w-100">
+                            <textarea data-length="100" class="form-control char-textarea" id="comment" rows="3"
+                              placeholder="Yorumun"></textarea>
+                            <label for="comment">Yorumun</label>
+                          </fieldset>
+                          <small class="counter-value float-right"><span class="char-count">0</span> / 100 </small>
+                          <a class="btn btn-primary mt-1 btn-sm text-light" onclick="comment({{veri.id}});">Paylaş</a>
+                        </form>
+                      </div>
+                      <div class="card-footer">
+                        <div class="row">
+                          <div class="col-12 col-sm-12 col-xl-12 col-lg-12" id="newcomment">
+
+                          </div>
+                          <div class="col-12 col-sm-12 col-xl-12 col-lg-12">
+
+                            {% for comment in comments %}
+
+                            {% if comment.PostId == veri.id %}
+                            <div class="card" id="comment{{comment.id}}">
+                              <div class="card-header">
+                                <span class="position-relative"><span class="avatar mr-1 ">
+                                    <img src="{% static 'app-assets/images/portrait/small/avatar-s-20.jpg' %}"
+                                      alt="avtar img holder" width="32" height="32"></span>
+                                  <span class="text text-bold-500">
+                                    <strong class="font-small-4">{{comment.CommentsOwner}}</strong>
+                                  </span>
+                                </span>
+
+                                {% if comment.CommentsOwner == request.user.username %}
+                                <span>
+                                  <form>
+                                    <a onclick="commentdelete({{comment.id}});" class="float-right"><i
+                                        class="fas fa-trash font-medium-5 mr-1" title="Yorumu Sil"></i></a>
+                                  </form>
+                                </span>
+                                {% endif %}
+
+                              </div>
+                              <div class="card-body"><i class="font-small-5">{{comment.Comment}}</i></div>
+                              <div>
+                                <span class="float-right font-small-2 text-danger ">{{comment.CommentTime}}</span>
+                              </div>
+
+                            </div>
+                            <hr>
+                            {% endif %}
+
+
+                            {% endfor %}
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </form>
+
+            </div>
+          </div>
+
+          {% endfor %}
+
+
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+  <script>
+    $('#NewPostForm').submit(function (e) {
+      e.preventDefault();
+
+      $.ajax({
+        type: 'POST',
+        url: '/newpost/',
+        data: {
+          category: $('#category option:selected').val(),
+          content: $('#PostContent').val(),
+          isComment: $('#isStatus').is(':checked'),
+          csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function (json) {
+          console.log('İd = > ' + json.postid)
+          document.getElementById('NewPostForm').reset()
+          toastr.info('Gönderi oluşturuldu.')
+          $('#PostNotFound').remove()
+          $('#newpost').append('<div class="card" id = "removepostid' + json.postid + '"><div class="card-header"><span class="position-relative"><span class="avatar mr-1 avatar-xl"><img src="{% static "app-assets/images/portrait/small/avatar-s-20.jpg" %}"></span><span class="text text-bold-500"><strong class="font-medium-1">' + json.name + ' ' + json.surname + '</strong><br><i class="font-small-2">' + json.username + '</i>&nbsp;•&nbsp;<i class="font-small-2">' + json.category + '</i>&nbsp;•&nbsp;<i class="font-small-2">1 dk daha az</i></span></span><span class="ml-auto position-sticky"><span class="dropdown font-size-xsmall" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fas fa-ellipsis-h font-medium-5"></i></span><div class="dropdown-menu"><a class="dropdown-item" href="#">Kullanıcıyı Bildir</a><a class="dropdown-item" href="#">Kullanıcıyı Engelle</a><a class="dropdown-item" href="#">Hatalı Kategori Bildir</a><a class="dropdown-item" href="#">Profile Git</a><button class="dropdown-item" onclick = "DeletePost(' + json.postid + ');">Gönderiyi Sil</button></div></span></div><hr><div class="card-body pl-2">' + json.content + '</div><div class="card-footer"><span><a data-toggle="collapse" href="#Post' + json.postid + '" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="fas fa-comment mr-auto ml-auto font-medium-4" title="Yorumlar"></i></a><b class="font-medium-5"></b></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><a><i class="far fa-heart mr-auto ml-auto font-medium-4 text-danger" title="Beğen"></i></a><b class="font-medium-5"></b></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span><a name="save" onclick="save({{veri.id}});" id="postsave" title="Kaydet"><i class="far fa-bookmark mr-auto ml-auto font-medium-4"></i></a></span><div class="collapse" id="Post' + json.postid + '"><div class="card card-body"><div class="col-12 "><fieldset class="form-label-group mb-0"><textarea data-length="100" class="form-control char-textarea" id="comment" rows="3 placeholder="Yorumun"></textarea><label for="comment">Yorumun</label></fieldset><small class="counter-value float-right"><span class="char-count"></span> / 100 </small><a onclick = "comment(' + json.postid + ');" class="btn btn-primary mt-1 btn-sm">Paylaş</a></div></div></div> <div class="col-12 col-sm-12 col-xl-12 col-lg-12" id="newcomment"></div></div></div>')
+        }
+      })
+    })
+  </script>
+  <script>
+    function DeletePost(id) {
+      swal({
+        title: "Silmek İstiyor musun?",
+        text: "Bu işlem geri alınamaz!",
+        icon: "warning",
+        buttons: ["İptal", "Sil"],
+        dangerMode: true,
+      })
+        .then((willDelete) => {
+          if (willDelete) {
+            $.ajax({
+              type: 'POST',
+              url: '/deletepost/' + id + '/',
+              data: {
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+              }, success: function () {
+                toastr.success("Gönderi Silindi")
+                $('#removepostid' + id).remove()
+              },
+              error: function () {
+                toastr.error('Bizden kaynaklanan bir hata yüzünden gönderi silinemedi!')
+              }
+            })
+
+
+          } else {
+            toastr.error("İptal Edildi!")
+          }
+        });
+    }
+
+    function comment(id) {
+      $.ajax({
+        type: 'POST',
+        url: '/comment/' + id + '/',
+        data: {
+          comment: $('#comment').val(),
+          csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function (json) {
+          toastr.success('Yorum Paylaşıldı.');
+          $('#newcomment').append(' <div class="card" id = "comment' + json.commentid + '"><div class="card-header"><span class="position-relative"><span class="avatar mr-1 "><img src="{% static "app-assets/images/portrait/small/avatar-s-20.jpg" %}" alt="avtar img holder" width="32" height="32"></span><span class="text text-bold-500 position-relative"><strong class="font-small-4">' + json.Owner + '</strong></span></span><span><form><a onclick="commentdelete(' + json.commentid + ');" class="float-right"><i class="fas fa-trash font-medium-5 mr-1" title="Yorumu Sil"></i></a></form></span></div><div class="card-body"><i class="font-small-5">' + json.Comment + '</i></div><div><span class="float-right font-small-2 text-danger ">Şimdi</span></div></div><hr>')
+          document.getElementById('comment').value = ""
+        }
+      })
+    }
+
+
+
+    function commentdelete(id) {
+      $.ajax({
+        type: 'POST',
+        url: '/commentdelete/' + id + '/',
+        data: {
+          csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        }, success: function () {
+          toastr.success('Yorum Silindi')
+          $('#comment' + id).remove();
+        }
+      })
+    }
+
+    
+    function like(id) {
+      var button = document.getElementById('likebutton' + id);
+      if (button.name == "like") {
+        $.ajax({
+          type: 'POST',
+          url: '/like/' + id + '/',
+          data: {
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+          },
+          success: function () {
+            button.innerHTML = '<i class="fas fa-heart mr-auto ml-auto font-medium-4 text-danger" ></i>'
+            button.name = "liked"
+            button.title = "Beğendin"
+            toastr.info('Gönderiyi Beğendin.')
+          },
+          error: function () {
+            toastr.error('Bizden kaynaklanan bir sebepten dolayı işlem gerçekleştirilemedi.')
+          }
+        })
+      }
+      else if (button.name == "liked") {
+        $.ajax({
+          type: 'POST',
+          url: '/dislike/' + id + '/',
+          data: {
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+          },
+          success: function () {
+            button.innerHTML = '<i class="far fa-heart mr-auto ml-auto font-medium-4 text-danger""></i>'
+            button.name = "like"
+            button.title = "Beğen"
+          },
+          error: function () {
+            toastr.error('Bizden kaynaklanan bir sebepten dolayı işlem gerçekleştirilemedi.')
+          }
+        })
+      }
+    }
+    function save(id) {
+      var buttonsave = document.getElementById('postsave' + id);
+      if (buttonsave.name == "save") {
+        $.ajax({
+          type: 'POST',
+          url: '/save/' + id + '/',
+          data: {
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+          }, success: function () {
+            buttonsave.innerHTML = '<i class="fas fa-bookmark mr-auto ml-auto font-medium-4"></i>';
+            buttonsave.name = "saved";
+            buttonsave.title = "Kaydedildi."
+            toastr.success('Gönderi Kaydedilenlere Eklendi.')
+          },
+          error: function () {
+            toastr.error('Bizden kaynaklanan bir sebepten dolayı işlem gerçekleştirilemedi.')
+          }
+        })
+      }
+      else if (buttonsave.name == "saved") {
+        $.ajax({
+          type: 'POST',
+          url: '/savedelete/' + id + '/',
+          data: {
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+
+          }, success: function () {
+            buttonsave.innerHTML = '<i class="far fa-bookmark mr-auto ml-auto font-medium-4"></i>';
+            buttonsave.name = "save";
+            buttonsave.title = "Kaydet"
+            toastr.warning('Gönderi Kaydedilenlerden Çıkarıldı.')
+          }, error: function () {
+            toastr.error('Bizden kaynaklanan bir sebepten dolayı işlem gerçekleştirilemedi.')
+          }
+        })
+      }
+
+    }
+
+  </script>
+
+
+</body>
+
+</html>
+{% endblock content %}
