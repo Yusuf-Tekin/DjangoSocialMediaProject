@@ -37,3 +37,13 @@ class Notification(models.Model):
     NotificationPostId = models.IntegerField()
     NotificationTime = models.DateTimeField(auto_now_add=True)
     NotificationStatus = models.BooleanField(auto_created=False)
+
+
+
+class Follow(models.Model):
+    FollowOwner = models.CharField(max_length = 20)
+    FollowOwnerId = models.IntegerField()
+    FollowSentBy = models.CharField(max_length = 20)
+    FollowSentById = models.IntegerField()
+    FollowDate = models.DateField(auto_now_add=True)
+    

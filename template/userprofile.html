@@ -7,14 +7,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>{% block title %}
+    Kullanıcı Profili
+    {% endblock title %}</title>
 </head>
 
 <body>
-    
-    {% for veri in data  %}
-        
-        
+
+  {% for veri in data  %}
+
+
   <section id="page-account-settings">
     <div class="row">
       <!-- left menu section -->
@@ -28,6 +30,23 @@
             </a>
           </li>
         </ul>
+        <form>
+          {% csrf_token %}
+
+          {% if veri.id in followdata %}
+          <span>
+            <a onclick="follow({{veri.id}});" id="followbutton"
+              class="btn btn-lg mx-auto text-white" name = "following" style="background-color: gray;">Takiptesin</a>
+          </span>
+          {% else %}
+          <span>
+            <a onclick="follow({{veri.id}});" id="followbutton"
+              class="btn btn-lg mx-auto text-white" name = "follow" style="background-color: gray;">Takip Et</a>
+
+          </span>  
+          {% endif %}
+        </form>
+
       </div>
       <!-- right content section -->
       <div class="col-md-9">
@@ -91,6 +110,54 @@
             </div>
           </div>
   </section>
+  <script>
+    function follow(id) {
+      var button = document.getElementById('followbutton')
+      if (button.name == 'follow'){
+        $.ajax({
+        type: 'POST',
+        url: '/follow/' + id + '/',
+        data: {
+          FollowOwner: '{{veri.username}}',
+          FollowOwnerId: '{{veri.id}}',
+          FollowSentByOwner: '{{request.user.username}}',
+          FollowSentByOwnerId: '{{request.user.id}}',
+          csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function () {
+          toastr.success('{{veri.username}} takip ediliyor.')
+          button.innerHTML = "Takiptesin"
+          button.name = "following"
+        },
+        error: function () {
+          toastr.error('Bizden kaynaklanan bir sebepten ötürü işlem gerçekleştirilemedi.')
+        }
+      })
+      }
+      else if(button.name = "following"){
+        $.ajax({
+        type: 'POST',
+        url: '/followdelete/' + id + '/',
+        data: {
+          FollowOwner: '{{veri.username}}',
+          FollowOwnerId: '{{veri.id}}',
+          FollowSentByOwner: '{{request.user.username}}',
+          FollowSentByOwnerId: '{{request.user.id}}',
+          csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function () {
+          toastr.warning('{{veri.username}} takipten çıkarıldı.')
+          button.innerHTML = "Takip Et"
+          button.name = "follow"
+        },
+        error: function () {
+          toastr.error('Bizden kaynaklanan bir sebepten ötürü işlem gerçekleştirilemedi.')
+        }
+      })
+      }
+
+    }
+  </script>
   {% endfor %}
 
 </body>

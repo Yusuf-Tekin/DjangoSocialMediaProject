@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.contrib import messages
-from .models import Post,Likes,Comments,SavePost,Notification
+from .models import Post,Likes,Comments,SavePost,Notification,Follow
 import json
 
 
@@ -20,7 +20,6 @@ def login(request):
             user = authenticate(request,username=username, password=password)        
             if user is not None:
                 dj_login(request,user)
-                print('Yönlendir')
                 return redirect('/home/')
             else:
                 messages.error(request,"Giriş Başarısız")
@@ -251,6 +250,7 @@ def profile(request):
     return render(request,"profile.html")
 
 
+@login_required(login_url= "/login/")
 
 def saves(request):
     
@@ -262,6 +262,8 @@ def saves(request):
             savesdata.append(data)
     
     return render(request,"saves.html",{'data' : savesdata})
+
+@login_required(login_url= "/login/")
 
 def favorite(request):
 
@@ -280,6 +282,7 @@ def favorite(request):
     return render(request,"favorite.html",context)
 
 
+@login_required(login_url= "/login/")
 
 def updateprofile(request):
     if request.method == "POST":
@@ -289,15 +292,27 @@ def updateprofile(request):
         update.save()
     return HttpResponse('')
 
+@login_required(login_url= "/login/")
+
 def userprofile(request,id):
+    followinglist = []
+
     userdata = User.objects.filter(id = id)
+    followdata = Follow.objects.filter(FollowSentById = request.user.id)
+
+    for follow in followdata:
+        followinglist.append(follow.FollowOwnerId)
+
+    print(followinglist)
     data = {
-        'data' : userdata
+        'data' : userdata,
+        'followdata' : followinglist
     }
     return render(request,"userprofile.html",data)
 
 
 
+@login_required(login_url= "/login/")
 
 def notification(request,type):
     if request.method =="POST":
@@ -317,6 +332,7 @@ def notification(request,type):
         )
     
     return HttpResponse('')
+@login_required(login_url= "/login/")
 
 def deletenotification(request):
     if request.method =="POST":
@@ -337,8 +353,34 @@ def deletenotification(request):
 
     return HttpResponse('')
 
+@login_required(login_url= "/login/")
 def readNotification(request,id):
     data = Notification.objects.get(id = id)
     data.NotificationStatus = 1
     data.save()
+    return HttpResponse('')
+
+def follow(request,id):
+    if request.method == "POST":
+        FollowOwner = request.POST.get('FollowOwner')
+        FollowOwnerId = request.POST.get('FollowOwnerId')
+        FollowSentByOwner = request.POST.get('FollowSentByOwner')
+        FollowSentByOwnerId = request.POST.get('FollowSentByOwnerId')
+
+        newfollow = Follow.objects.create(FollowOwner = FollowOwner,FollowOwnerId = FollowOwnerId,FollowSentBy = FollowSentByOwner,FollowSentById = FollowSentByOwnerId )
+
+
+    return HttpResponse('')
+
+def followdelete(request,id):
+    if request.method == "POST":
+        FollowOwner = request.POST.get('FollowOwner')
+        FollowOwnerId = request.POST.get('FollowOwnerId')
+        FollowSentByOwner = request.POST.get('FollowSentByOwner')
+        FollowSentByOwnerId = request.POST.get('FollowSentByOwnerId')
+
+        FollowDel = Follow.objects.get(FollowOwnerId = FollowOwnerId,FollowSentById = FollowSentByOwnerId)
+        FollowDel.delete()
+
+        #print('Bilgiler-> \nOwner =' , FollowOwner , '\nId -> ' ,FollowOwnerId ,'\nFollowSentOwner = ' , FollowSentByOwner , '\nFollowSentId = ' , FollowSentByOwnerId)
     return HttpResponse('')
