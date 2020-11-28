@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.contrib import messages
 from .models import Post,Likes,Comments,SavePost,Notification,Follow
-import json
+import json,random
 
 
 
@@ -46,18 +46,18 @@ def register(request):
 def home(request):
     if request.user.is_authenticated:
         # Tüm veriler
-        
         PostData = Post.objects.all().order_by('Time').reverse()
         CommentsData = Comments.objects.all().order_by('CommentTime').reverse()
         SaveData = SavePost.objects.filter(SaveOwnerId = request.user.id)
         LikeData = Likes.objects.filter(OwnerId = request.user.id)
         NotificationData = Notification.objects.filter(NotificationOwner = request.user.username).order_by('NotificationTime').reverse()
         
+        Peoples = User.objects.all()[0:5]
         likelist = []
         savelist =[]
 
         for x in SaveData:
-            savelist.append(PostData)
+            savelist.append(x.SavePostId)
 
         for i in LikeData:
             likelist.append(i.PostId)
@@ -67,6 +67,7 @@ def home(request):
             'clientlikedata' : likelist,
             'clientsavedata' : savelist,
             'Notification' : NotificationData,
+            'Peoples' : Peoples
         }
 
         return render(request,"home.html",context)
@@ -322,6 +323,7 @@ def notification(request,type):
         NotificationSentBy = request.POST.get('NotificationSentBy')
         NotificationPostId = request.POST.get('NotificationPostId')
 
+        print('NotOwner -> ' ,NotificationOwner, '\nSentBy -> ' + NotificationSentBy)
         newnotification = Notification.objects.create(
                 NotificationOwner = NotificationOwner,
                 NotificationOwnerId = NotificationOwnerId,

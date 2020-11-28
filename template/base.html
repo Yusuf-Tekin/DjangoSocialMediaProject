@@ -200,8 +200,26 @@
                                                     class="fas fa-bookmark font-medium-5 dark"></i></div>
                                             <div class="media-body">
                                                 <h6 class="dark media-heading">{{data.NotificationSentBy}} gönderini
-                                                    kaydetti.</h6><small class="notification-text">Şimdi
-                                                    Görüntüle</small>
+                                                    kaydetti.</h6>
+                                            </div><small>
+                                                <time class="media-meta"
+                                                    datetime="2015-06-11T18:29:20+08:00">{{data.NotificationTime}}</time>
+                                                    <br>
+                                                    {% if data.NotificationStatus == 0 %}
+                                                    <h6 class="text-danger">Yeni</h6>
+                                                    {% else %}
+                                                    <small class="text-primary mt-4">Okundu</small>
+                                                    {% endif %}</small>
+                                        </div>
+                                    </a>
+                                    {% elif data.NotificationType == 'comment' %}
+                                    <a class="d-flex justify-content-between" onclick="ReadFullNotification({{data.id}});">
+                                        <div class="media d-flex align-items-start">
+                                            <div class="media-left text-primary"><i
+                                                    class="fas fa-comment font-medium-5 primary"></i></div>
+                                            <div class="media-body">
+                                                <h6 class="primary media-heading">{{data.NotificationSentBy}} gönderine
+                                                    yorum yaptı.</h6>
                                             </div><small>
                                                 <time class="media-meta"
                                                     datetime="2015-06-11T18:29:20+08:00">{{data.NotificationTime}}</time>

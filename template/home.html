@@ -57,22 +57,34 @@
       <hr class="mt-5 bg-primary">
     </div>
     <div class="col-12 col-sm-12 col-md-4 col-xl-4">
-      <h2>En Son Beğendiklerin</h2>
+      <h2>Önerilen Kullanıcılar</h2>
       <div class="divider divider-center">
         <div class="divider-text"><i class="fas fa-arrow-down"></i></div>
       </div>
       <div class="row">
-        <div class="col-12 col-sm-12 col-md-12">
+
+        {% for people in Peoples %}
+        <div class="col-12 col-sm-12 col-md-12" id="people{{people.id}}">
           <div class="card">
             <div class="card-header">
             </div>
             <div class="card-body">
-
+              <span class="float-left">
+                <h5>{{people.first_name}} {{people.last_name}}</h5>
+                <small class="">{{people.username}}</small>
+              </span>
+              <span class="float-right">
+                <a href="{% url 'userprofile' people.id %}" title="Profile Git"><i class="fas fa-caret-right font-large-1"></i></a>
+              </span>
             </div>
 
           </div>
 
-        </div>          
+        </div>
+        {% empty %}
+        <span class="alert alert-warning mx-auto">Önerilen Kullanıcı Yok!</span>
+        {% endfor %}
+
 
       </div>
     </div>
@@ -251,7 +263,10 @@
 
             </div>
           </div>
+          {{veri.OwnerUsername}}
+          {{request.user.username}}
           <script>
+          
             function notification(id, type) {
               $.ajax({
                 type: 'POST',
@@ -269,7 +284,7 @@
             }
           </script>
           <script>
-            function delnotification(id,type){
+            function delnotification(id, type) {
               $.ajax({
                 type: 'POST',
                 url: '/delnotification/',
@@ -307,6 +322,7 @@
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
   <script>
+
     $('#NewPostForm').submit(function (e) {
       e.preventDefault();
 
@@ -398,7 +414,7 @@
             button.innerHTML = '<i class="far fa-heart mr-auto ml-auto font-medium-4 text-danger""></i>'
             button.name = "like"
             button.title = "Beğen"
-            delnotification(id,'like')
+            delnotification(id, 'like')
           },
           error: function () {
             toastr.error('Bizden kaynaklanan bir sebepten dolayı işlem gerçekleştirilemedi.')
@@ -442,7 +458,7 @@
             buttonsave.name = "save";
             buttonsave.title = "Kaydet"
             toastr.warning('Gönderi Kaydedilenlerden Çıkarıldı.')
-            delnotification(id,'save')
+            delnotification(id, 'save')
           }, error: function () {
             toastr.error('Bizden kaynaklanan bir sebepten dolayı işlem gerçekleştirilemedi.')
           }
